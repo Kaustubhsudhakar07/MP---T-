@@ -28,8 +28,14 @@ const signupSchema = z.object({
 
 //creating an object schema for login validation
 const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6)
+    email: z
+     .string({required_error: "Email is required"})
+     .trim()
+     .email({message:"Invalid email address"}),
+    password: z
+     .string({required_error: "Password is required"})
+     .trim()
+
 });
 
 module.exports = {
