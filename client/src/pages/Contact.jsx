@@ -22,7 +22,6 @@ import { useState } from "react";
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(contact);
   };
 
 //  Help me reach 1 Million subs 👉 https://youtube.com/thapatechnical

@@ -7,7 +7,7 @@ const Analytics = () => {
         <section className="section-analytics">
             <div className="container grid grid-four-cols">
                 <div className="div1">
-                    <h2>50++</h2>
+                    <h2>50+</h2>
                     <p>Registered Companies</p>
                 </div>
                 <div className="div1">

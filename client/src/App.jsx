@@ -6,6 +6,7 @@ import Service from './pages/Service';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
+import PageNotFound from './pages/PageNotFound';
 
 const App = () => {
   return (
@@ -19,10 +20,10 @@ const App = () => {
         <Route path='/service' element={<Service/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>}/>
+        <Route path='*' element={<PageNotFound/>} />
       </Routes>
     </BrowserRouter>
      </>
-  )
-};
+  )};
 
 export default App;
