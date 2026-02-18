@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  const { storeTokenInLS } = useAuth();
 
   const navigate = useNavigate();
 
@@ -20,11 +23,29 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
+  // let handle the form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("after login: ", responseData);
+        // toast.success("Registration Successful");
+       storeTokenInLS(responseData.token);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-    
- 
 
   return (
     <>
@@ -34,15 +55,15 @@ const Login = () => {
             <div className="container grid grid-two-cols">
               <div className="registration-image reg-img">
                 <img
-                  src="/images/login.png"
-                  alt="let's login"
+                  src="/images/register.png"
+                  alt="a nurse with a cute look"
                   width="400"
                   height="500"
                 />
               </div>
               {/* our main registration code  */}
               <div className="registration-form">
-                <h1 className="main-heading mb-3">Login form</h1>
+                <h1 className="main-heading mb-3">login form</h1>
                 <br />
                 <form onSubmit={handleSubmit}>
                   <div>
@@ -68,7 +89,7 @@ const Login = () => {
                   </div>
                   <br />
                   <button type="submit" className="btn btn-submit">
-                     Login Now
+                    Login Now
                   </button>
                 </form>
               </div>

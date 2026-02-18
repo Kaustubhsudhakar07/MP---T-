@@ -3,13 +3,23 @@ const dotenv = require('dotenv');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 
 dotenv.config();
+const cors = require('cors');
+
 
 const app = express();
 const authRouter = require('./router/authRouter');
 const contactRouter = require('./router/contactRouter');
 const connectDB = require('./utils/db');
 
+const corsOptions = {
+  origin: 'http://localhost:5173', // Replace with your frontend URL
+  methods: 'GET,POST,PUT,DELETE,PATCH,HEAD',
+  credentials: true,
+};
 
+
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 

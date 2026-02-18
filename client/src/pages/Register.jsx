@@ -1,4 +1,5 @@
 import { useState } from "react";
+import{ useNavigate } from "react-router-dom";
 
  const Register = () => {
   const [user, setUser] = useState({
@@ -6,26 +7,55 @@ import { useState } from "react";
     email: "",
     password: "",
     phoneNumber: "",
-   
+    
   });
+ 
+  const navigate = useNavigate();
+
+  // handle input change
+
+
+
 
   const handleInput = (e) => {
+    console.log(e);
     let name = e.target.name;
     let value = e.target.value;
 
     setUser({
-      ...user,//spread operator to copy the existing user object
-      [name]: value,//as we dont know which input field is being updated we use the name attribute to update the corresponding value in the user object
+      ...user,
+      [name]: value,
     });
   };
 
   // handle form on submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(user);
 
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      console.log("response data : ", response);
+
+      if (response.ok) {
+        const responseData = await response.json();
+        alert("registration successful");
+        setUser({ username: "", email: "",password: "" , phoneNumber: "" });
+        navigate("/login");
+        console.log(responseData);
+      } else {
+        console.log("error inside response ", response);
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
-
-  
 
   return (
     <>
@@ -37,7 +67,7 @@ import { useState } from "react";
                 <img
                   src="/images/register.png"
                   alt="a nurse with a cute look"
-                  width="500"
+                  width="400"
                   height="500"
                 />
               </div>
@@ -54,9 +84,6 @@ import { useState } from "react";
                       value={user.username}
                       onChange={handleInput}
                       placeholder="username"
-                      id = "username"
-                      required
-                      autoComplete="off"
                     />
                   </div>
                   <div>
@@ -67,13 +94,8 @@ import { useState } from "react";
                       value={user.email}
                       onChange={handleInput}
                       placeholder="email"
-                      id = "email"
-                        required
-                        autoComplete="off"
-                
                     />
                   </div>
-
                   <div>
                     <label htmlFor="password">password</label>
                     <input
@@ -82,22 +104,15 @@ import { useState } from "react";
                       value={user.password}
                       onChange={handleInput}
                       placeholder="password"
-                        id = "password"
-                        required
-                        autoComplete="off"
                     />
                   </div>
-
                   <div>
-                    <label htmlFor="phoneNumber">phone number</label>
+                    <label htmlFor="phoneNumber">phoneNumber</label>
                     <input
                       type="number"
                       name="phoneNumber"
                       value={user.phoneNumber}
                       onChange={handleInput}
-                      id = "phoneNumber"
-                        required
-                        autoComplete="off"
                     />
                   </div>
                   
