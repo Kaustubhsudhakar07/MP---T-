@@ -408,11 +408,13 @@ a.active {
     grid-template-columns: 1fr;
   }
 
-  .section-services {
-    & .grid-three-cols {
-      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
-    }
-  }
+.section-services .container.grid.grid-three-cols {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 3.2rem;
+  overflow-x: hidden;
+}
+
 
   .section-registration {
     & .container {

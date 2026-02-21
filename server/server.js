@@ -1,6 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+const serviceRouter = require('./router/serviceRouter');
+const adminRouter = require('./router/adminRouter');
 
 dotenv.config();
 const cors = require('cors');
@@ -25,6 +27,8 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/form", contactRouter);
+app.use("/api/data", serviceRouter);
+app.use("/api/admin", adminRouter);
 
 app.use(errorMiddleware);
 
